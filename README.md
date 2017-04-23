@@ -1,6 +1,6 @@
-Yolocaust
+Dab Shooter
 ----------
 
-A game about terminating all millenials from the planet.
+A game about saving the planet by shooting dabs at enemies
 
 Written in Gosu
