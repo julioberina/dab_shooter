@@ -63,5 +63,11 @@ class UserInterface < Gosu::Window
         end
       end
     end
+
+    # Draw the cat's health bar
+    @engine.writer.draw "Health: ", 5, 0, 0, 1, 1, Gosu::Color::WHITE
+    @engine.cat.health.each do |bar|
+      Gosu.draw_rect(bar[0], bar[1], bar[2], bar[3], Gosu::Color::GREEN)
+    end
   end
 end

@@ -2,18 +2,23 @@ require_relative "entity"
 
 class NyanCat < Entity
   attr_accessor :charge, :dc
+  attr_reader :health
 
   def initialize
     @frame = 0
     @pic = []
     1.upto(9).each { |i| @pic << Gosu::Image.new("assets/images/nyancat#{i}.png") }
-    @x, @y, @z = [0, 101, 0]
+    @x, @y, @z = [0, 50, 0]
     @dc = 0
     @charge = 0
     @dx, @dy = [0, 0]
     @scale_x = 3.5
     @scale_y = 3
     @bullets = []
+    @health = [
+      [140, 10, 40, 30],
+      [180, 10, 40, 30]
+    ]
   end
 
   def reset_charge
@@ -26,7 +31,7 @@ class NyanCat < Entity
     @x += @dx
     @y += @dy
     @charge += @dc
-    @dy = 0 if @y <= 100 or @y >= 550
+    @dy = 0 if @y < 50 or @y >= 550
     @dx = 0 if @x <= 0 or @x >= 200
 
     # Update bullets

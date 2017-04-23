@@ -9,8 +9,9 @@ module Scene
 end
 
 class GameEngine
-  attr_reader :writer, :background_image, :background_music, :scene, :frame,
+  attr_reader :background_image, :background_music, :scene, :frame,
   :cat, :bframe
+  attr_accessor :writer
 
   def initialize
     @background_image = Gosu::Image.new("assets/images/background.jpg", tileable: false)
@@ -39,6 +40,7 @@ class GameEngine
         29.times do |i|
           @background_image << Gosu::Image.new("assets/images/frame_#{i}_delay-0.03s.png")
         end
+        @writer = Gosu::Font.new(50, name: "assets/fonts/Roboto-Regular.ttf")
       end
     elsif id == Gosu::KbS or id == Gosu::KbW or id == Gosu::KbDown or id == Gosu::KbUp
       @cat.dy = 0 if @scene == Scene::MAIN
@@ -51,7 +53,7 @@ class GameEngine
       else
         bullet.sound_effect = Gosu::Sample.new("assets/audio/shoot.wav")
       end
-      
+
       @cat.bullets << bullet.tap { |b| b.shoot(@cat.charge) }
       @cat.reset_charge
     end
