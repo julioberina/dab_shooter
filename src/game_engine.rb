@@ -46,6 +46,11 @@ class GameEngine
       @cat.dx = 0 if @scene == Scene::MAIN
     elsif id == Gosu::KbSpace
       bullet = Bullet.new(:right, @cat.x + 125, @cat.y - 16)
+      if @cat.charged?
+        bullet.sound_effect = Gosu::Sample.new("assets/audio/cometsound.wav")
+      else
+        bullet.sound_effect = Gosu::Sample.new("assets/audio/shoot.wav")
+      end
       @cat.bullets << bullet.tap { |b| b.shoot(@cat.charge) }
       @cat.reset_charge
     end

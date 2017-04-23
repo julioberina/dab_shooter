@@ -58,6 +58,8 @@ class UserInterface < Gosu::Window
           bullet.sound_effect.play(0.02, 5)
         else
           bullet.pic.draw bullet.x, bullet.y, 0
+          bullet.mark if bullet == @engine.cat.bullets.first
+          bullet.sound_effect.play(0.02, 1) if bullet.marked?
         end
       end
     end
