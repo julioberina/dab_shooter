@@ -7,7 +7,7 @@ class NyanCat < Entity
     @frame = 0
     @pic = []
     1.upto(9).each { |i| @pic << Gosu::Image.new("assets/images/nyancat#{i}.png") }
-    @x, @y, @z = [0, 0, 0]
+    @x, @y, @z = [0, 101, 0]
     @dc = 0
     @charge = 0
     @dx, @dy = [0, 0]
@@ -26,7 +26,7 @@ class NyanCat < Entity
     @x += @dx
     @y += @dy
     @charge += @dc
-    @dy = 0 if @y <= 0 or @y >= 550
+    @dy = 0 if @y <= 100 or @y >= 550
     @dx = 0 if @x <= 0 or @x >= 200
 
     # Update bullets
