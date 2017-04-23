@@ -5,7 +5,7 @@ require_relative "game_engine.rb"
 class UserInterface < Gosu::Window
   def initialize
     super 800, 600
-    self.caption = "Yolocaust"
+    self.caption = "Dab Shooter"
     @engine = GameEngine.new
     @engine.background_music.play true
   end
@@ -59,7 +59,7 @@ class UserInterface < Gosu::Window
         else
           bullet.pic.draw bullet.x, bullet.y, 0
           bullet.mark if bullet == @engine.cat.bullets.first
-          bullet.sound_effect.play(0.02, 1) if bullet.marked?
+          bullet.sound_effect.play(0.02, 5) if bullet.marked?
         end
       end
     end

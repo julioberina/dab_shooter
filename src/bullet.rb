@@ -31,7 +31,7 @@ class Bullet < Entity
   def shoot(charge = 0, sound_effect = nil)
     if @orientation == :right
       @dx = 10
-      if charge >= 179
+      if charge >= 119
         @pic = []
         1.upto(10).each { |i| @pic << Gosu::Image.new("assets/images/DabFrame#{i}.png") }
       else

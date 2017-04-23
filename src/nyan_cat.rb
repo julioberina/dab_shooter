@@ -41,6 +41,6 @@ class NyanCat < Entity
   end
 
   def charged?
-    @charge >= 179
+    @charge >= 119
   end
 end

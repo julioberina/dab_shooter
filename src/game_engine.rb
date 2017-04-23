@@ -51,6 +51,7 @@ class GameEngine
       else
         bullet.sound_effect = Gosu::Sample.new("assets/audio/shoot.wav")
       end
+      
       @cat.bullets << bullet.tap { |b| b.shoot(@cat.charge) }
       @cat.reset_charge
     end
