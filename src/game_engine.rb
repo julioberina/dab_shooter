@@ -19,12 +19,6 @@ class GameEngine
     @scene = Scene::TITLE
     @frame = 0
     @bframe = 0
-
-    # Initialize the Nyan Cat
-    character_init
-  end
-
-  def character_init
     @cat = NyanCat.new
   end
 

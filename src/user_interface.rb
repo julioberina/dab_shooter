@@ -55,6 +55,7 @@ class UserInterface < Gosu::Window
       @engine.cat.bullets.each do |bullet|
         if bullet.pic.is_a? Array
           bullet.pic[bullet.c_frame / 10].draw(bullet.x - 300, bullet.y, 0)
+          bullet.sound_effect.play(0.02, 5)
         else
           bullet.pic.draw bullet.x, bullet.y, 0
         end

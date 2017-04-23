@@ -3,6 +3,7 @@ require_relative "entity"
 class Bullet < Entity
   attr_accessor :orientation
   attr_reader :c_frame
+  attr_reader :sound_effect
 
   def initialize orientation, x, y
     @orientation = orientation
@@ -11,6 +12,7 @@ class Bullet < Entity
     @dx = 0
     @dy = 0
     @c_frame = 0
+    @sound_effect = Gosu::Sample.new("assets/audio/cometsound.wav")
   end
 
   def update

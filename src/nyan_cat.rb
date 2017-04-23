@@ -32,7 +32,7 @@ class NyanCat < Entity
     # Update bullets
     unless @bullets.empty?
       @bullets.each { |bullet| bullet.update }
-      if @bullets.first.pic.is_a? Array and @bullets.first.x > 1200
+      if @bullets.first.pic.is_a? Array and @bullets.first.x > 1100
          @bullets.shift
        elsif @bullets.first.pic.is_a? Gosu::Image and @bullets.first.x > 800
          @bullets.shift
