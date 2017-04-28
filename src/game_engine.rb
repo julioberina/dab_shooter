@@ -2,6 +2,7 @@
 # to the UserInterface class
 require_relative "bullet"
 require_relative "nyan_cat"
+require_relative "enemy_plane"
 
 module Scene
   TITLE = 1
@@ -10,7 +11,7 @@ end
 
 class GameEngine
   attr_reader :background_image, :background_music, :scene, :frame,
-  :cat, :bframe
+  :cat, :enemy, :bframe
   attr_accessor :writer
 
   def initialize
@@ -21,6 +22,7 @@ class GameEngine
     @frame = 0
     @bframe = 0
     @cat = NyanCat.new
+    @enemy = EnemyPlane.new
   end
 
   def update
@@ -30,6 +32,9 @@ class GameEngine
     if @frame >= 300 then @frame = 0 end
     if @bframe >= 300 then @bframe = 0 end
     @cat.update if @scene == Scene::MAIN
+
+    # spwan enemies
+    spawn_enemies
   end
 
   def button_up id
@@ -46,7 +51,7 @@ class GameEngine
       @cat.dy = 0 if @scene == Scene::MAIN
     elsif id == Gosu::KbA or id == Gosu::KbD or id == Gosu::KbLeft or id == Gosu::KbRight
       @cat.dx = 0 if @scene == Scene::MAIN
-    elsif id == Gosu::KbSpace
+    elsif id == Gosu::KbSpace and @scene == Scene::MAIN
       bullet = Bullet.new(:right, @cat.x + 125, @cat.y - 16)
       if @cat.charged?
         bullet.sound_effect = Gosu::Sample.new("assets/audio/cometsound.wav")
@@ -71,5 +76,9 @@ class GameEngine
     elsif id == Gosu::KbSpace
       @cat.dc = 1
     end
+  end
+
+  def spawn_enemies
+
   end
 end

@@ -16,8 +16,8 @@ class NyanCat < Entity
     @scale_y = 3
     @bullets = []
     @health = [
-      [140, 10, 40, 30],
-      [180, 10, 40, 30]
+      [145, 10, 40, 30],
+      [185, 10, 40, 30]
     ]
   end
 

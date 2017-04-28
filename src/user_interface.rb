@@ -50,6 +50,9 @@ class UserInterface < Gosu::Window
     @engine.cat.x, @engine.cat.y, @engine.cat.z,
     @engine.cat.scale_x, @engine.cat.scale_y) # Draw the cat
 
+    # Draw the enemy plane(s)
+    @engine.enemy.pic.draw(0, 0, 0)
+
     # Draw the cat's bullets if there are any
     unless @engine.cat.bullets.empty?
       @engine.cat.bullets.each do |bullet|
