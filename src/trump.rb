@@ -9,7 +9,7 @@ class Trump < Entity
     @y = y
     @spawn_x = x
     @spawn_y = y
-    @health = 10
+    @health = 25
     @pic = Gosu::Image.new("assets/images/trump.png")
   end
 end

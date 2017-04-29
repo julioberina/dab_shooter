@@ -7,7 +7,9 @@ require_relative "trump"
 
 module Scene
   TITLE = 1
+  PREGAME = 2
   MAIN = 3
+  GAME_OVER = 4
 end
 
 class GameEngine
@@ -31,31 +33,38 @@ class GameEngine
 
   def update
     # Update game entities
-    @frame = (@frame + 1) % 60
-    @bframe = (@bframe + 1) % 58
-    if @frame >= 300 then @frame = 0 end
-    if @bframe >= 300 then @bframe = 0 end
-    @cat.update if @scene == Scene::MAIN
+    if @scene == Scene::MAIN
+      @frame = (@frame + 1) % 60
+      @bframe = (@bframe + 1) % 58
+      if @frame >= 300 then @frame = 0 end
+      if @bframe >= 300 then @bframe = 0 end
+      @cat.update if @scene == Scene::MAIN
 
-    if @killed_enemies < 50
-      # spawn enemies
-      spawn_enemy if @enemies.empty? or @enemies.last.x <= 550
-      make_enemies_float unless @enemies.empty?
-      move_enemies
-
-      # Check bullet collision second time
-      bullet_game_logic unless @enemies.empty? or @cat.bullets.empty?
-    else
-      until @enemies.empty?
-        make_enemies_float
+      if @killed_enemies < 100
+        # spawn enemies
+        spawn_enemy if @enemies.empty? or @enemies.last.x <= 550
+        make_enemies_float unless @enemies.empty?
         move_enemies
-        bullet_game_logic unless @enemies.empty? or @cat.bullets.empty?
-      end
 
-      # Bring out Trump
-      @trump = Trump.new((550-165), 200) if @trump.nil?
-      donald_bullet_logic
-      donald_float
+        # Check bullet collision second time
+        bullet_game_logic unless @enemies.empty? or @cat.bullets.empty?
+      else
+        until @enemies.empty?
+          make_enemies_float
+          move_enemies
+          bullet_game_logic unless @enemies.empty? or @cat.bullets.empty?
+        end
+
+        # Bring out Trump
+        @trump = Trump.new((550-165), 200) if @trump.nil?
+        donald_bullet_logic
+        donald_float
+
+        # Check for Trump kill
+        if @trump.health.zero?
+          @scene = Scene::GAME_OVER
+        end
+      end
     end
   end
 
@@ -96,7 +105,7 @@ class GameEngine
     elsif id == Gosu::KbD or id == Gosu::KbRight
       (@cat.dx = 5 unless @cat.dx == 5) if @scene == Scene::MAIN
     elsif id == Gosu::KbSpace
-      @cat.dc = 1
+      @cat.dc = 2
     end
   end
 
