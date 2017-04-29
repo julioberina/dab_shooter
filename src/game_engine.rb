@@ -84,7 +84,7 @@ class GameEngine
 
   # Spawn enemies
   def spawn_enemy
-    enemy = EnemyPlane.new(700, (rand(540) + 41))
+    enemy = EnemyPlane.new(700, (rand(450) + 41))
     enemy.dx = -2
     @enemies << enemy
   end
