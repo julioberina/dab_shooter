@@ -23,6 +23,8 @@ class GameEngine
     @bframe = 0
     @cat = NyanCat.new
     @enemies = []
+
+    @spawn_elapsed_seconds = 0
   end
 
   def update
@@ -34,7 +36,9 @@ class GameEngine
     @cat.update if @scene == Scene::MAIN
 
     # spawn enemies
-    spawn_enemies
+    spawn_enemy if @enemies.empty? or @enemies.last.x <= 550
+    make_enemies_float unless @enemies.empty?
+    move_enemies
   end
 
   def button_up id
@@ -78,7 +82,40 @@ class GameEngine
     end
   end
 
-  def spawn_enemies
+  # Spawn enemies
+  def spawn_enemy
+    enemy = EnemyPlane.new(700, (rand(540) + 41))
+    enemy.dx = -2
+    @enemies << enemy
+  end
 
+  # Move enemies
+  def move_enemies
+    unless @enemies.empty?
+      @enemies.each { |enemy| enemy.x += enemy.dx }
+      if @enemies.first.x <= -120 then @enemies.shift end
+    end
+  end
+
+  # Floating enemies (sin-based)
+  def make_enemies_float
+    @enemies.each do |enemy|
+      enemy.y = enemy.spawn_y + (10 * Math::sin((@frame * 6) * Math::PI / 180.0))
+    end
+  end
+
+  # Check if player bullet hits an enemy
+  def bullet_game_logic
+    # [28, 54] is the bullet y-range for collision purposes, x is simply to 64
+    # 152, 95 is the charged bullet's width and height respectively
+
+    # Check for dab bullet or charged bullet hitting an enemy
+    #@cat.bullets.each do |bullet|
+      #if bullet.is_a? Array
+
+      #else
+
+      #end
+    #end
   end
 end

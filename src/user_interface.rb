@@ -51,7 +51,9 @@ class UserInterface < Gosu::Window
     @engine.cat.scale_x, @engine.cat.scale_y) # Draw the cat
 
     # Draw the enemy plane(s)
-    @engine.enemy.pic.draw(0, 0, 0)
+    unless @engine.enemies.empty?
+      @engine.enemies.each { |enemy| enemy.pic.draw enemy.x, enemy.y, 0, 0.6, 0.6 }
+    end
 
     # Draw the cat's bullets if there are any
     unless @engine.cat.bullets.empty?
