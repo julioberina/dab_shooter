@@ -19,6 +19,8 @@ class UserInterface < Gosu::Window
     case @engine.scene
     when Scene::TITLE
       title_screen
+    when Scene::PREGAME
+      pregame_screen
     when Scene::MAIN
       main_screen
     end
@@ -47,7 +49,17 @@ class UserInterface < Gosu::Window
   end
 
   def pregame_screen
-
+    @engine.writer.draw "In the year 3000, all but one human has died from the memepocalypse", 10, 10, 0, 0.3, 0.3, Gosu::Color::WHITE
+    @engine.writer.draw "The only human being that has survived is Donald Trump,", 10, 40, 0, 0.3, 0.3, Gosu::Color::WHITE
+    @engine.writer.draw "Known among the memes, particularly United Airlines ones,", 10, 70, 0, 0.3, 0.3, Gosu::Color::WHITE
+    @engine.writer.draw "As the Benevolent Dictator of Memes, aka Badass Douchebag Motherfucker", 10, 100, 0, 0.3, 0.3, Gosu::Color::WHITE
+    @engine.writer.draw "One meme, Nyan Cat, declined to join the Trump Troops", 10, 160, 0, 0.3, 0.3, Gosu::Color::WHITE
+    @engine.writer.draw "And he is out to destroy UA flights and overthrow the BDM", 10, 190, 0, 0.3, 0.3, Gosu::Color::WHITE
+    @engine.writer.draw "Gameplay Controls: ", 10, 250, 0, 0.3, 0.3, Gosu::Color::WHITE
+    @engine.writer.draw "WASD - Movement (up, left, down, right)", 10, 280, 0, 0.3, 0.3, Gosu::Color::WHITE
+    @engine.writer.draw "Spacebar (tap) - Shoot a dab", 10, 310, 0, 0.3, 0.3, Gosu::Color::WHITE
+    @engine.writer.draw "Spacebar (hold for ~2 seconds) - Shoot a flaming dab", 10, 340, 0, 0.3, 0.3, Gosu::Color::WHITE
+    @engine.writer.draw "Now that you're ready, press Enter to Play...", 10, 400, 0, 0.3, 0.3, Gosu::Color::WHITE
   end
 
   def main_screen

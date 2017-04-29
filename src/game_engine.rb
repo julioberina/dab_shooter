@@ -72,8 +72,10 @@ class GameEngine
     if id == Gosu::KbReturn or id == Gosu::KbEnter
       if @scene == Scene::TITLE
         @scene = Scene::PREGAME
+        @writer = Gosu::Font.new(72)
       elsif @scene == Scene::PREGAME
         @scene = Scene::MAIN
+        @writer = Gosu::Font.new(72, name: "assets/fonts/Capture_it.ttf")
         @background_image = []
         29.times do |i|
           @background_image << Gosu::Image.new("assets/images/frame_#{i}_delay-0.03s.png")
