@@ -11,7 +11,7 @@ end
 
 class GameEngine
   attr_reader :background_image, :background_music, :scene, :frame,
-  :cat, :enemy, :bframe
+  :cat, :enemies, :bframe
   attr_accessor :writer
 
   def initialize
@@ -22,7 +22,7 @@ class GameEngine
     @frame = 0
     @bframe = 0
     @cat = NyanCat.new
-    @enemy = EnemyPlane.new
+    @enemies = []
   end
 
   def update
@@ -33,7 +33,7 @@ class GameEngine
     if @bframe >= 300 then @bframe = 0 end
     @cat.update if @scene == Scene::MAIN
 
-    # spwan enemies
+    # spawn enemies
     spawn_enemies
   end
 
