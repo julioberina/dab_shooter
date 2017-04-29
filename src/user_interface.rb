@@ -36,12 +36,18 @@ class UserInterface < Gosu::Window
   # Methods that draw specific entities to screen based on the scene
 
   def title_screen
-    @engine.background_image.draw 0, 0, 0, 0.444, 0.435
+    @engine.background_image.draw 0, 0, 0, 4.44, 3.35
+
+    @engine.writer.draw "Dab Shooter", 200, 30, 0, 1, 0.7, Gosu::Color::WHITE
 
     # blinking effect
     if @engine.frame < 30
-      @engine.writer.draw "Press Enter to Play", 155, 390, 0, 0.75, 0.5, Gosu::Color::WHITE
+      @engine.writer.draw "Press Enter to Play", 155, 420, 0, 0.75, 0.5, Gosu::Color::WHITE
     end
+  end
+
+  def pregame_screen
+
   end
 
   def main_screen

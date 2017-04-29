@@ -33,11 +33,11 @@ class GameEngine
 
   def update
     # Update game entities
+    @frame = (@frame + 1) % 60
+    @bframe = (@bframe + 1) % 58
+    if @frame >= 300 then @frame = 0 end
+    if @bframe >= 300 then @bframe = 0 end
     if @scene == Scene::MAIN
-      @frame = (@frame + 1) % 60
-      @bframe = (@bframe + 1) % 58
-      if @frame >= 300 then @frame = 0 end
-      if @bframe >= 300 then @bframe = 0 end
       @cat.update if @scene == Scene::MAIN
 
       if @killed_enemies < 100
@@ -71,6 +71,8 @@ class GameEngine
   def button_up id
     if id == Gosu::KbReturn or id == Gosu::KbEnter
       if @scene == Scene::TITLE
+        @scene = Scene::PREGAME
+      elsif @scene == Scene::PREGAME
         @scene = Scene::MAIN
         @background_image = []
         29.times do |i|
