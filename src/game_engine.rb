@@ -14,7 +14,7 @@ end
 
 class GameEngine
   attr_reader :background_image, :background_music, :scene, :frame,
-  :cat, :enemies, :bframe, :trump, :killed_enemies
+  :cat, :enemies, :bframe, :trump, :killed_enemies, :america
   attr_accessor :writer
 
   def initialize
@@ -27,6 +27,7 @@ class GameEngine
     @cat = NyanCat.new
     @enemies = []
     @trump = nil
+    @america = Gosu::Image.new("assets/images/youwin.jpg")
 
     @killed_enemies = 0
   end
@@ -63,6 +64,7 @@ class GameEngine
         # Check for Trump kill
         if @trump.health.zero?
           @scene = Scene::GAME_OVER
+          @writer = Gosu::Font.new(72)
         end
       end
     end

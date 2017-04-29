@@ -23,6 +23,8 @@ class UserInterface < Gosu::Window
       pregame_screen
     when Scene::MAIN
       main_screen
+    when Scene::GAME_OVER
+      game_over_screen
     end
   end
 
@@ -97,5 +99,11 @@ class UserInterface < Gosu::Window
         end
       end
     end
+  end
+
+  def game_over_screen
+    @engine.writer.draw "You did it! You defeated Trump!", 200, 25, 0, 0.4, 0.5, Gosu::Color::WHITE
+    @engine.america.draw 140, 130, 0
+    @engine.writer.draw "You made America great again!", 200, 500, 0, 0.4, 0.5, Gosu::Color::WHITE
   end
 end
