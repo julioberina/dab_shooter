@@ -55,6 +55,17 @@ class UserInterface < Gosu::Window
       @engine.enemies.each { |enemy| enemy.pic.draw enemy.x, enemy.y, 0, 0.6, 0.6 }
     end
 
+    # Draw Trump once he exists
+    unless @engine.trump.nil?
+      @engine.writer.draw "Trump Health:  ", 10, 10, 0, 0.7, 0.5, Gosu::Color::WHITE
+      @engine.writer.draw @engine.trump.health.to_s, 230, 10, 0, 0.7, 0.5, Gosu::Color::WHITE
+      @engine.trump.pic.draw @engine.trump.x, @engine.trump.y, 0
+    else
+      # Track number of enemies killed
+      @engine.writer.draw "Killed enemies:  ", 10, 10, 0, 0.7, 0.5, Gosu::Color::WHITE
+      @engine.writer.draw @engine.killed_enemies.to_s, 210, 10, 0, 0.7, 0.5
+    end
+
     # Draw the cat's bullets if there are any
     unless @engine.cat.bullets.empty?
       @engine.cat.bullets.each do |bullet|

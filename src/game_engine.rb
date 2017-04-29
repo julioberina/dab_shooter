@@ -3,6 +3,7 @@
 require_relative "bullet"
 require_relative "nyan_cat"
 require_relative "enemy_plane"
+require_relative "trump"
 
 module Scene
   TITLE = 1
@@ -11,7 +12,7 @@ end
 
 class GameEngine
   attr_reader :background_image, :background_music, :scene, :frame,
-  :cat, :enemies, :bframe
+  :cat, :enemies, :bframe, :trump, :killed_enemies
   attr_accessor :writer
 
   def initialize
@@ -23,6 +24,7 @@ class GameEngine
     @bframe = 0
     @cat = NyanCat.new
     @enemies = []
+    @trump = nil
 
     @killed_enemies = 0
   end
@@ -35,13 +37,26 @@ class GameEngine
     if @bframe >= 300 then @bframe = 0 end
     @cat.update if @scene == Scene::MAIN
 
-    # spawn enemies
-    spawn_enemy if @enemies.empty? or @enemies.last.x <= 550
-    make_enemies_float unless @enemies.empty?
-    move_enemies
+    if @killed_enemies < 50
+      # spawn enemies
+      spawn_enemy if @enemies.empty? or @enemies.last.x <= 550
+      make_enemies_float unless @enemies.empty?
+      move_enemies
 
-    # Check bullet collision second time
-    bullet_game_logic unless @enemies.empty? or @cat.bullets.empty?
+      # Check bullet collision second time
+      bullet_game_logic unless @enemies.empty? or @cat.bullets.empty?
+    else
+      until @enemies.empty?
+        make_enemies_float
+        move_enemies
+        bullet_game_logic unless @enemies.empty? or @cat.bullets.empty?
+      end
+
+      # Bring out Trump
+      @trump = Trump.new((550-165), 200) if @trump.nil?
+      donald_bullet_logic
+      donald_float
+    end
   end
 
   def button_up id
@@ -138,5 +153,25 @@ class GameEngine
 
     @enemies.reject! &:nil? # Remove all nil values in Array
     @cat.bullets.reject! &:nil? unless @cat.bullets.empty? # Remove all nil values in Array
+  end
+
+  # Functions for once Trump comes out
+  def donald_bullet_logic
+    @cat.bullets.length.times do |n|
+      if @cat.bullets[n] != nil and @cat.bullets[n].pic.is_a? Array
+        if (@cat.bullets[n].x - 150) >= @trump.x
+          if (@cat.bullets[n].y + 95) >= @trump.y and @cat.bullets[n].y <= (@trump.y + 200)
+            @trump.health -= 1 unless @cat.bullets[n].marked?
+            @cat.bullets[n].mark
+          end
+        end
+      end
+    end
+
+    @cat.bullets.reject! &:nil? unless @cat.bullets.empty?
+  end
+
+  def donald_float
+    @trump.y = @trump.spawn_y + (150 * Math::sin((@frame * 6) * Math::PI / 180.0))
   end
 end
