@@ -1,5 +1,10 @@
 require_relative "entity"
 
+# Write nil class method to assign default x
+class NilClass
+  def x; 2000 end
+end
+
 class EnemyPlane < Entity
   attr_reader :spawn_x, :spawn_y
 

@@ -2,7 +2,6 @@ require_relative "entity"
 
 class NyanCat < Entity
   attr_accessor :charge, :dc
-  attr_reader :health
 
   def initialize
     @frame = 0
@@ -15,10 +14,6 @@ class NyanCat < Entity
     @scale_x = 3.5
     @scale_y = 3
     @bullets = []
-    @health = [
-      [145, 10, 40, 30],
-      [185, 10, 40, 30]
-    ]
   end
 
   def reset_charge

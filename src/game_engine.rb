@@ -24,7 +24,7 @@ class GameEngine
     @cat = NyanCat.new
     @enemies = []
 
-    @spawn_elapsed_seconds = 0
+    @killed_enemies = 0
   end
 
   def update
@@ -39,6 +39,9 @@ class GameEngine
     spawn_enemy if @enemies.empty? or @enemies.last.x <= 550
     make_enemies_float unless @enemies.empty?
     move_enemies
+
+    # Check bullet collision second time
+    bullet_game_logic unless @enemies.empty? or @cat.bullets.empty?
   end
 
   def button_up id
@@ -92,7 +95,7 @@ class GameEngine
   # Move enemies
   def move_enemies
     unless @enemies.empty?
-      @enemies.each { |enemy| enemy.x += enemy.dx }
+      @enemies.each { |enemy| enemy.x += enemy.dx unless enemy.nil? }
       if @enemies.first.x <= -120 then @enemies.shift end
     end
   end
@@ -100,7 +103,7 @@ class GameEngine
   # Floating enemies (sin-based)
   def make_enemies_float
     @enemies.each do |enemy|
-      enemy.y = enemy.spawn_y + (10 * Math::sin((@frame * 6) * Math::PI / 180.0))
+      enemy.y = enemy.spawn_y + (10 * Math::sin((@frame * 6) * Math::PI / 180.0)) unless enemy.nil?
     end
   end
 
@@ -110,12 +113,30 @@ class GameEngine
     # 152, 95 is the charged bullet's width and height respectively
 
     # Check for dab bullet or charged bullet hitting an enemy
-    #@cat.bullets.each do |bullet|
-      #if bullet.is_a? Array
+    @cat.bullets.length.times do |n|
+      unless @cat.bullets[n].pic.is_a? Array
+        @enemies.length.times do |i|
+          if @cat.bullets[n] != nil and (@cat.bullets[n].x + 64) >= @enemies[i].x
+            if (@cat.bullets[n].y + 54) >= @enemies[i].y and (@cat.bullets[n].y + 28) <= (@enemies[i].y + 72)
+              @enemies[i] = nil
+              @cat.bullets[n] = nil
+              @killed_enemies += 1
+            end
+          end
+        end
+      else
+        @enemies.length.times do |i|
+          if @cat.bullets[n] != nil and (@cat.bullets[n].x + 20) >= @enemies[i].x
+            if (@cat.bullets[n].y + 95) >= @enemies[i].y and @cat.bullets[n].y <= (@enemies[i].y + 72)
+              @enemies[i] = nil
+              @killed_enemies += 1
+            end
+          end
+        end
+      end
+    end
 
-      #else
-
-      #end
-    #end
+    @enemies.reject! &:nil? # Remove all nil values in Array
+    @cat.bullets.reject! &:nil? unless @cat.bullets.empty? # Remove all nil values in Array
   end
 end
