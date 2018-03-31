@@ -57,7 +57,7 @@ class GameEngine
         end
 
         # Bring out Trump
-        @trump = Trump.new((550-165), 200) if @trump.nil?
+        @trump ||= Trump.new((550-165), 200)
         donald_bullet_logic
         donald_float
 
