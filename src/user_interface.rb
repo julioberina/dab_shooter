@@ -76,7 +76,7 @@ class UserInterface < Gosu::Window
     end
 
     # Draw Trump once he exists
-    unless @engine.trump.nil?
+    if @engine.trump
       @engine.writer.draw "Trump Health:  ", 10, 10, 0, 0.7, 0.5, Gosu::Color::WHITE
       @engine.writer.draw @engine.trump.health.to_s, 230, 10, 0, 0.7, 0.5, Gosu::Color::WHITE
       @engine.trump.pic.draw @engine.trump.x, @engine.trump.y, 0
