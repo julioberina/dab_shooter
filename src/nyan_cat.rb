@@ -5,8 +5,7 @@ class NyanCat < Entity
 
   def initialize
     @frame = 0
-    @pic = []
-    1.upto(9).each { |i| @pic << Gosu::Image.new("assets/images/nyancat#{i}.png") }
+    @pic = Dir["**/nyancat*png"].map { |name| Gosu::Image.new(name) }
     @x, @y, @z = [0, 50, 0]
     @dc = 0
     @charge = 0
