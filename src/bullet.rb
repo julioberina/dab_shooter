@@ -32,8 +32,7 @@ class Bullet < Entity
     if @orientation == :right
       @dx = 10
       if charge >= 119
-        @pic = []
-        1.upto(10).each { |i| @pic << Gosu::Image.new("assets/images/DabFrame#{i}.png") }
+        @pic = Dir["**/DabFrame*png"].map { |file| Gosu::Image.new(file) }
       else
         @pic = Gosu::Image.new("assets/images/dabbullet.png")
       end
