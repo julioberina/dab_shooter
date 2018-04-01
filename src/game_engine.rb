@@ -78,10 +78,7 @@ class GameEngine
       elsif @scene == Scene::PREGAME
         @scene = Scene::MAIN
         @writer = Gosu::Font.new(72, name: "assets/fonts/Capture_it.ttf")
-        @background_image = []
-        29.times do |i|
-          @background_image << Gosu::Image.new("assets/images/frame_#{i}_delay-0.03s.png")
-        end
+        @background_image = Dir["**/frame*png"].sort.map { |file| Gosu::Image.new(file) }
         @writer = Gosu::Font.new(50, name: "assets/fonts/Roboto-Regular.ttf")
       end
     elsif id == Gosu::KbS or id == Gosu::KbW or id == Gosu::KbDown or id == Gosu::KbUp
